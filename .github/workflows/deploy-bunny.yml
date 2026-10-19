@@ -1,8 +1,10 @@
 name: Deploy to BunnyCDN
 
 on:
-  push:
-    branches: [main]
+  # Manual-only for now: the other Clickboost websites deploy via
+  # websites/scripts/bunny/deploy.sh, not GitHub Actions. To enable CI
+  # auto-deploys on push, restore the push trigger and add the repo
+  # secrets/vars listed in README.md.
   workflow_dispatch:
 
 concurrency:
@@ -13,6 +15,10 @@ jobs:
   deploy:
     name: Build & upload
     runs-on: ubuntu-latest
+    env:
+      # GitHub rejects `secrets.*` inside a step-level `if:`, so expose it here.
+      BUNNY_ACCOUNT_API_KEY: ${{ secrets.BUNNY_ACCOUNT_API_KEY }}
+      BUNNY_PULL_ZONE_ID: ${{ vars.BUNNY_PULL_ZONE_ID }}
 
     steps:
       - uses: actions/checkout@v4
@@ -39,10 +45,10 @@ jobs:
 
       - name: Purge CDN cache
         # Optional: requires the account-level Bunny API key.
-        if: ${{ secrets.BUNNY_ACCOUNT_API_KEY != '' }}
+        if: ${{ env.BUNNY_ACCOUNT_API_KEY != '' }}
         run: |
           curl -s -X POST \
-            "https://api.bunny.net/pullzone/${{ vars.BUNNY_PULL_ZONE_ID }}/purgeCache" \
-            -H "AccessKey: ${{ secrets.BUNNY_ACCOUNT_API_KEY }}" \
+            "https://api.bunny.net/pullzone/${{ env.BUNNY_PULL_ZONE_ID }}/purgeCache" \
+            -H "AccessKey: ${{ env.BUNNY_ACCOUNT_API_KEY }}" \
             -H "Content-Type: application/json" \
             -d '{"Purge": false}'
