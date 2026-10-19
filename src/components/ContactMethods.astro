@@ -1,0 +1,49 @@
+---
+import { ArrowRight, Mail, MapPin, Phone } from 'lucide-react';
+import { contact } from '@/data/site';
+
+const icons = {
+  phone: Phone,
+  mail: Mail,
+  'map-pin': MapPin,
+} as const;
+---
+
+<div
+  class="flex flex-col gap-1 rounded-2xl border border-border bg-card p-4 shadow-sm"
+>
+  <p
+    class="px-3.5 pb-2 pt-1.5 text-[11px] font-semibold uppercase tracking-[0.15em] text-muted-foreground"
+  >
+    Reach Me Directly
+  </p>
+
+  {
+    contact.contactMethods.map((method) => {
+      const Icon = icons[method.icon];
+      return (
+        <a
+          href={method.href}
+          class="group flex items-center gap-3.5 rounded-xl border border-transparent p-3 transition-colors hover:border-border hover:bg-secondary/70"
+        >
+          <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
+            <Icon size={18} className="h-[18px] w-[18px] text-primary" />
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+              {method.label}
+            </div>
+            <div class="truncate text-sm font-semibold text-foreground transition-colors group-hover:text-primary">
+              {method.value}
+            </div>
+            <div class="text-[11px] text-muted-foreground/70">{method.detail}</div>
+          </div>
+          <ArrowRight
+            size={14}
+            className="shrink-0 text-muted-foreground/40 transition-all group-hover:translate-x-0.5 group-hover:text-primary"
+          />
+        </a>
+      );
+    })
+  }
+</div>

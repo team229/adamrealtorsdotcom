@@ -1,0 +1,40 @@
+---
+import { ShieldCheck } from 'lucide-react';
+import { contact } from '@/data/site';
+---
+
+<aside
+  class="rounded-2xl border border-primary/15 bg-gradient-to-br from-primary/[0.06] via-card to-card p-5 shadow-sm"
+>
+  <div class="flex items-start gap-3.5">
+    <div
+      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground"
+    >
+      <ShieldCheck size={19} strokeWidth={1.8} />
+    </div>
+    <div class="min-w-0">
+      <h3
+        class="text-base font-bold text-foreground"
+        style="font-family: var(--font-heading)"
+      >
+        {contact.promise.title}
+      </h3>
+      <p class="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+        {contact.promise.body}
+      </p>
+    </div>
+  </div>
+
+  <dl class="mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
+    {
+      contact.promise.facts.map((fact) => (
+        <div class="bg-card px-4 py-3">
+          <dt class="text-[10px] font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+            {fact.label}
+          </dt>
+          <dd class="mt-1 text-sm font-semibold text-foreground">{fact.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</aside>

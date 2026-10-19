@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 28% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 217 60% 26%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 216 50% 96%;
+    --secondary-foreground: 0 0% 39%;
+    --muted: 216 33% 97%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 39 46% 61%;
+    --accent-foreground: 0 0% 100%;
+    --accent-strong: 32 45% 32%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 60% 26%;
+
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-serif: ui-serif, Georgia, 'Times New Roman', serif;
+    --font-mono: ui-monospace, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas,
+      'Courier New', monospace;
+
+    --adam-shadow-sm: 0 8px 32px hsl(var(--primary) / 0.13);
+    --adam-shadow-md: 0 16px 48px hsl(var(--primary) / 0.18);
+    --adam-shadow-hover: 0 8px 32px hsl(var(--primary) / 0.35);
+
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------
+     Scroll reveal
+     A CSS-first, zero-JS reveal system. Elements start hidden and are
+     revealed by a single IntersectionObserver in the layout. This keeps
+     content visible in the SSR payload, in print, and for crawlers.
+     ------------------------------------------------------------------ */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  [data-reveal='visible'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Load-time reveal for the hero (plays immediately on paint). */
+  [data-reveal='load'] {
+    animation: reveal-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  [data-reveal='load'][data-reveal-delay='1'] {
+    animation-delay: 0.08s;
+  }
+
+  [data-reveal='load'][data-reveal-delay='2'] {
+    animation-delay: 0.16s;
+  }
+
+  [data-reveal='load'][data-reveal-delay='3'] {
+    animation-delay: 0.24s;
+  }
+
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal],
+    [data-reveal='load'] {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  @media print {
+    [data-reveal],
+    [data-reveal='load'] {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+  }
+}

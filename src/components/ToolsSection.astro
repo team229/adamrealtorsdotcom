@@ -1,0 +1,65 @@
+---
+import { ArrowUpRight, Calculator, Home, TrendingUp } from 'lucide-react';
+import { contact } from '@/data/site';
+
+const icons = {
+  home: Home,
+  calculator: Calculator,
+  'trending-up': TrendingUp,
+} as const;
+---
+
+<section class="border-t border-border bg-background py-16">
+  <div class="container mx-auto px-6">
+    <div class="mx-auto max-w-5xl">
+      <div data-reveal class="mx-auto mb-10 max-w-2xl text-center">
+        <h2
+          class="text-2xl font-bold text-foreground md:text-3xl"
+          style="font-family: var(--font-heading)"
+        >
+          {contact.notReady.title}
+        </h2>
+        <p class="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
+          {contact.notReady.body}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {
+          contact.notReady.tools.map((tool) => {
+            const Icon = icons[tool.icon];
+            return (
+              <a
+                href={tool.href}
+                target={tool.external ? '_blank' : undefined}
+                rel={tool.external ? 'noopener noreferrer' : undefined}
+                data-reveal
+                class="group flex flex-col rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-lg"
+              >
+                <div class="flex h-10 w-10 items-center justify-center rounded-xl border border-primary/15 bg-primary/10">
+                  <Icon size={18} className="h-[18px] w-[18px] text-primary" />
+                </div>
+                <h3
+                  class="mt-4 text-base font-bold text-foreground"
+                  style="font-family: var(--font-heading)"
+                >
+                  {tool.title}
+                </h3>
+                <p class="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
+                  {tool.body}
+                </p>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                  Explore
+                  <ArrowUpRight
+                    size={15}
+                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  />
+                </span>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</section>

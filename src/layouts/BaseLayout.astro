@@ -1,0 +1,124 @@
+---
+import '../styles/global.css';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer.astro';
+import { site } from '@/data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  canonical?: string;
+  /** JSON-LD structured data injected into the head. */
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  ogImage = `https://adamtherealtor.com${site.portrait}`,
+  canonical = new URL(Astro.url.pathname, site.url).href,
+  schema,
+} = Astro.props;
+
+const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Adam Shaaban — Southern California real estate agent" />
+    <meta property="og:site_name" content={site.name} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@AdamTheRealtor" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap"
+    />
+
+    <noscript>
+      <style>
+        [data-reveal],
+        [data-reveal='load'] {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+      </style>
+    </noscript>
+
+    {
+      schemas.map((entry) => (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(entry).replace(/</g, '\\u003c')}
+        />
+      ))
+    }
+  </head>
+  <body class="min-h-screen bg-background flex flex-col">
+    <Header pathname={Astro.url.pathname} client:load />
+    <main class="flex-1 pb-20 lg:pb-0">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<script>
+  /**
+   * Scroll reveal.
+   *
+   * A single IntersectionObserver flips every [data-reveal] element to its
+   * visible state the first time it enters the viewport. Runs once on load
+   * and again after any client-side navigation.
+   */
+  function initReveal() {
+    const targets = document.querySelectorAll<HTMLElement>(
+      '[data-reveal]:not([data-reveal="visible"]):not([data-reveal="load"])',
+    );
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach((el) => el.setAttribute('data-reveal', 'visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.setAttribute('data-reveal', 'visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+
+    targets.forEach((el) => observer.observe(el));
+  }
+
+  initReveal();
+  document.addEventListener('astro:after-swap', initReveal);
+</script>

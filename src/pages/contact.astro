@@ -1,0 +1,70 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactHero from '@/components/ContactHero.astro';
+import ContactSection from '@/components/ContactSection.astro';
+import FaqSection from '@/components/FaqSection.astro';
+import ToolsSection from '@/components/ToolsSection.astro';
+import { contact, site } from '@/data/site';
+
+const canonical = new URL('/contact', site.url).href;
+
+const schemas = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${site.url}/#website`,
+    name: site.name,
+    url: `${site.url}/`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateAgent',
+    '@id': `${site.url}/#organization`,
+    name: site.name,
+    url: `${site.url}/`,
+    telephone: site.phone,
+    email: site.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '5241 E. Santa Ana Canyon Rd, Suite 100',
+      addressLocality: 'Anaheim',
+      addressRegion: 'CA',
+      postalCode: '92807',
+      addressCountry: 'US',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${canonical}#webpage`,
+    name: contact.meta.title,
+    url: canonical,
+    isPartOf: { '@id': `${site.url}/#website` },
+    about: { '@id': `${site.url}/#organization` },
+    description: contact.meta.description,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: contact.faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title={contact.meta.title}
+  description={contact.meta.description}
+  ogImage={contact.meta.ogImage}
+  canonical={canonical}
+  schema={schemas}
+>
+  <ContactHero />
+  <ContactSection />
+  <FaqSection />
+  <ToolsSection />
+</BaseLayout>

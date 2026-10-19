@@ -1,0 +1,7 @@
+---
+const canonical = new URL('/contact', 'https://adamtherealtor.com').href;
+
+// The contact experience is the centrepiece of this build — / is a thin
+// entry point that forwards visitors straight to it.
+return Astro.redirect(canonical, 302);
+---
