@@ -51,35 +51,55 @@ echo "→ Deploying '$DIST_DIR' to $BUNNY_STORAGE_ZONE ($BUNNY_ENDPOINT)"
 cd "$DIST_DIR"
 
 # 1. Create every directory first so empty folders are preserved.
-find . -type d -not -path '.' | sed 's|^\./||' | while read -r dir; do
+#    The zone is listed up front so re-runs are idempotent — a PUT against an
+#    existing directory returns 400.
+existing=$(curl -s -H "AccessKey: ${BUNNY_ACCESS_KEY}" "${BASE}/" | node -e '
+let raw = "";
+process.stdin.on("data", (d) => (raw += d)).on("end", () => {
+  try {
+    JSON.parse(raw)
+      .filter((f) => f.IsDirectory)
+      .forEach((f) => console.log(f.ObjectName));
+  } catch (e) {
+    /* empty or non-JSON response — treat as "nothing exists yet" */
+  }
+});
+')
+
+while read -r dir; do
+  [[ -n "$dir" ]] || continue
+  if grep -qx "$dir" <<< "$existing"; then
+    echo "  = ${dir}/ (exists)"
+    continue
+  fi
   code=$(curl -s -o /dev/null -w '%{http_code}' -X PUT \
     -H "AccessKey: ${BUNNY_ACCESS_KEY}" \
     "${BASE}/${dir}/")
-  [[ "$code" == "2"* || "$code" == "405" ]] || {
+  if [[ "$code" != 2* && "$code" != "405" ]]; then
     echo "  ✗ mkdir ${dir}/ (HTTP ${code})" >&2
     exit 1
-  }
-done
+  fi
+  echo "  + ${dir}/"
+done < <(find . -type d -not -path '.' | sed 's|^\./||' | sort)
 
 # 2. Upload every file.
-total=0
-failed=0
-find . -type f | sed 's|^\./||' | sort | while read -r file; do
+while read -r file; do
+  [[ -n "$file" ]] || continue
   code=$(curl -s -o /tmp/bunny-put.out -w '%{http_code}' -X PUT \
     -H "AccessKey: ${BUNNY_ACCESS_KEY}" \
     -H "Content-Type: $(content_type "$file")" \
     --data-binary "@${file}" \
     "${BASE}/${file}")
 
-  if [[ "$code" == "2"* ]]; then
+  if [[ "$code" == 2* ]]; then
     size=$(wc -c < "$file" | tr -d ' ')
-    printf '  ✓ %-46s %8s bytes\n' "$file" "$size"
+    printf '  ✓ %-46s %9s bytes\n' "$file" "$size"
   else
     printf '  ✗ %-46s HTTP %s\n' "$file" "$code" >&2
     cat /tmp/bunny-put.out >&2
     exit 1
   fi
-done
+done < <(find . -type f | sed 's|^\./||' | sort)
 
 echo "→ Verifying"
 curl -s -H "AccessKey: ${BUNNY_ACCESS_KEY}" "${BASE}/" | head -c 4000
