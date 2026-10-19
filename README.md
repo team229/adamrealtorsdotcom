@@ -106,3 +106,73 @@ Colours, fonts and radii are CSS custom properties on `:root`
 - Accent — `hsl(39 46% 61%)` muted gold
 - Headings — Playfair Display
 - Body — Inter
+
+## Deployment — BunnyCDN
+
+The site is served from a Bunny **Storage Zone** (region: Frankfurt, DE) behind a
+**Pull Zone**.
+
+### Auth
+
+Bunny's Storage API authenticates with the `AccessKey` header carrying the
+**storage zone password** — *not* the account API key, and not HTTP Basic auth.
+
+```
+AccessKey: <storage zone password>
+```
+
+### Manual deploy
+
+```bash
+npm run build
+
+export BUNNY_ACCESS_KEY="<storage zone password>"
+export BUNNY_STORAGE_ZONE="adamrealtorsdotcom"
+export BUNNY_ENDPOINT="storage.bunnycdn.com"   # Frankfurt, DE
+
+./scripts/deploy-bunny.sh dist
+```
+
+The script creates directories, uploads every file with an explicit
+`Content-Type`, and prints a manifest. To verify byte-for-byte:
+
+```bash
+cd dist
+find . -type f | sed 's|^\./||' | while read -r f; do
+  a=$(shasum -a 256 "$f" | cut -d' ' -f1)
+  b=$(curl -s -H "AccessKey: $BUNNY_ACCESS_KEY" \
+        "https://storage.bunnycdn.com/$BUNNY_STORAGE_ZONE/$f" | shasum -a 256 | cut -d' ' -f1)
+  [ "$a" = "$b" ] && echo "✓ $f" || echo "✗ $f"
+done
+```
+
+### Pull zone setup (one-time, in the Bunny dashboard)
+
+A Storage Zone is **not publicly reachable on its own** — it needs a Pull Zone
+in front of it.
+
+1. **CDN → Add Pull Zone**
+2. **Origin Type** → `Storage Zone`, then select `adamrealtorsdotcom`
+3. Add the hostname (e.g. `adamrealtorsdotcom.com`) and point a CNAME at the
+   generated `<pullzone>.b-cdn.net` hostname
+4. Enable SSL (free Let's Encrypt) once DNS resolves
+5. In the Storage Zone → **Error handling**, set the 404 file path to
+   `/index.html` and enable *Rewrite 404 to 200* if you want extensionless
+   routes to resolve
+
+### Automated deploys
+
+`.github/workflows/deploy-bunny.yml` builds and uploads on every push to
+`main`. Add these repository secrets/variables:
+
+| Name                    | Type     | Value                                    |
+| ----------------------- | -------- | ---------------------------------------- |
+| `BUNNY_ACCESS_KEY`      | secret   | Storage zone password                    |
+| `BUNNY_STORAGE_ZONE`    | secret   | `adamrealtorsdotcom`                     |
+| `BUNNY_ENDPOINT`        | variable | `storage.bunnycdn.com`                   |
+| `PUBLIC_SITE_URL`       | variable | Canonical origin, e.g. `https://adamrealtorsdotcom.com` |
+| `BUNNY_PULL_ZONE_ID`    | variable | Numeric pull zone id (cache purge)       |
+| `BUNNY_ACCOUNT_API_KEY` | secret   | Account API key (optional, cache purge)  |
+
+`PUBLIC_SITE_URL` drives the canonical URL, Open Graph tags and JSON-LD, so set
+it to the live domain before the first production build.

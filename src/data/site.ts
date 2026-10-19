@@ -35,9 +35,16 @@ export interface ContactMethod {
   href: string;
 }
 
+/**
+ * Canonical origin of the deployed site.
+ * Set PUBLIC_SITE_URL at build time to match the live domain
+ * (e.g. PUBLIC_SITE_URL=https://adamrealtorsdotcom.com npm run build).
+ */
+export const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://adamtherealtor.com';
+
 export const site = {
   name: 'Adam the Realtor',
-  url: 'https://adamtherealtor.com',
+  url: SITE_URL,
   agentName: 'Adam',
   agentFullName: 'Adam Shaaban',
   agentTitle: 'Southern California Realtor',

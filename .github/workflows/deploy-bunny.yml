@@ -1,0 +1,48 @@
+name: Deploy to BunnyCDN
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-bunny
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build & upload
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+
+      - name: Upload to Bunny Storage Zone
+        env:
+          BUNNY_ACCESS_KEY: ${{ secrets.BUNNY_ACCESS_KEY }}
+          BUNNY_STORAGE_ZONE: ${{ secrets.BUNNY_STORAGE_ZONE }}
+          BUNNY_ENDPOINT: ${{ vars.BUNNY_ENDPOINT }}
+        run: ./scripts/deploy-bunny.sh dist
+
+      - name: Purge CDN cache
+        # Optional: requires the account-level Bunny API key.
+        if: ${{ secrets.BUNNY_ACCOUNT_API_KEY != '' }}
+        run: |
+          curl -s -X POST \
+            "https://api.bunny.net/pullzone/${{ vars.BUNNY_PULL_ZONE_ID }}/purgeCache" \
+            -H "AccessKey: ${{ secrets.BUNNY_ACCOUNT_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"Purge": false}'

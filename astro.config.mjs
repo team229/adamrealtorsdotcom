@@ -4,7 +4,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://adamtherealtor.com',
+  site: process.env.PUBLIC_SITE_URL || 'https://adamtherealtor.com',
   integrations: [react()],
   vite: {
     server: {

@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ContactHero from '@/components/ContactHero.astro';
-import ContactSection from '@/components/ContactSection.astro';
-import FaqSection from '@/components/FaqSection.astro';
-import ToolsSection from '@/components/ToolsSection.astro';
+import ContactPage from '@/components/ContactPage.astro';
 import { contact, site } from '@/data/site';
 
+// The contact experience is the centrepiece of this build, so it is served
+// from both / and /contact. /contact is the canonical URL.
 const canonical = new URL('/contact', site.url).href;
 
 const schemas = [
@@ -63,8 +62,5 @@ const schemas = [
   canonical={canonical}
   schema={schemas}
 >
-  <ContactHero />
-  <ContactSection />
-  <FaqSection />
-  <ToolsSection />
+  <ContactPage />
 </BaseLayout>
