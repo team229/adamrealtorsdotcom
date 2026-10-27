@@ -1,0 +1,88 @@
+---
+import { ArrowRight, Phone } from 'lucide-react';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { cityPages, site } from '@/data/site';
+
+const title = 'Page Not Found | Adam the Realtor';
+const description =
+  'That page is no longer here. Browse Orange County city guides, the buyers and sellers guides, or contact Adam directly.';
+---
+
+<BaseLayout title={title} description={description} noindex>
+  <section class="relative overflow-hidden bg-[hsl(217,60%,16%)] text-white">
+    <div class="container mx-auto px-6 pb-16 pt-32 sm:pt-36">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">404</p>
+      <h1
+        class="mt-4 max-w-3xl text-4xl font-bold leading-tight sm:text-5xl"
+        style="font-family: var(--font-heading)"
+      >
+        This page has moved or no longer exists
+      </h1>
+      <p class="mt-4 max-w-xl text-base leading-relaxed text-white/70">
+        The link may be out of date. Here are the pages people usually need.
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#2a1f12] transition-colors hover:bg-accent/90"
+        >
+          Back to the homepage
+          <ArrowRight size={16} aria-hidden="true" />
+        </a>
+        <a
+          href={site.phoneHref}
+          class="inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+        >
+          <Phone size={15} aria-hidden="true" />
+          {site.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14">
+    <div class="container mx-auto px-6">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="text-2xl font-bold text-foreground" style="font-family: var(--font-heading)">
+          Popular pages
+        </h2>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <a
+            href="/buyers/"
+            class="rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30 hover:text-primary"
+          >
+            Buyers guide
+          </a>
+          <a
+            href="/sellers/"
+            class="rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30 hover:text-primary"
+          >
+            Sellers guide
+          </a>
+          <a
+            href="/about/"
+            class="rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30 hover:text-primary"
+          >
+            About Adam
+          </a>
+          <a
+            href="/contact/"
+            class="rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30 hover:text-primary"
+          >
+            Contact
+          </a>
+          {
+            cityPages.map((city) => (
+              <a
+                href={city.route}
+                class="rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30 hover:text-primary"
+              >
+                {city.name} homes for sale
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

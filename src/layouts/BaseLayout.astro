@@ -9,6 +9,8 @@ interface Props {
   description: string;
   ogImage?: string;
   canonical?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
   /** JSON-LD structured data injected into the head. */
   schema?: Record<string, unknown> | Record<string, unknown>[];
 }
@@ -16,8 +18,10 @@ interface Props {
 const {
   title,
   description,
-  ogImage = `https://adamtherealtor.com${site.portrait}`,
+  ogImage = `${site.url}/images/og-adam-the-realtor.jpg`,
   canonical = new URL(Astro.url.pathname, site.url).href,
+  ogType = 'website',
+  noindex = false,
   schema,
 } = Astro.props;
 
@@ -30,14 +34,24 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {canonical === `${site.url}/` && (
+      <link rel="preload" as="image" href="/images/hero-socal.webp" fetchpriority="high" />
+    )}
 
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {noindex ? (
+      <meta name="robots" content="noindex, follow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    )}
+    <meta name="theme-color" content="#1a3a6b" />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
@@ -79,8 +93,14 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     }
   </head>
   <body class="min-h-screen bg-background flex flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-primary focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"
+    >
+      Skip to content
+    </a>
     <Header pathname={Astro.url.pathname} client:load />
-    <main class="flex-1 pb-20 lg:pb-0">
+    <main id="main" class="flex-1 pb-20 lg:pb-0">
       <slot />
     </main>
     <Footer />

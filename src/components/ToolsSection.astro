@@ -27,7 +27,7 @@ const icons = {
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {
           contact.notReady.tools.map((tool) => {
-            const Icon = icons[tool.icon];
+            const Icon = icons[tool.icon as keyof typeof icons];
             return (
               <a
                 href={tool.href}

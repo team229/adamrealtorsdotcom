@@ -3,9 +3,8 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContactPage from '@/components/ContactPage.astro';
 import { contact, site } from '@/data/site';
 
-// The contact experience is the centrepiece of this build, so it is served
-// from both / and /contact. /contact is the canonical URL.
-const canonical = new URL('/contact', site.url).href;
+// Contact page. The homepage is a separate marketing page at /.
+const canonical = new URL('/contact/', site.url).href;
 
 const schemas = [
   {

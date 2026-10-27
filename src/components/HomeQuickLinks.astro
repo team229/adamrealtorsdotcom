@@ -1,0 +1,58 @@
+---
+import { ArrowUpRight, Calculator, Home, KeyRound, MapPin } from 'lucide-react';
+
+const links = [
+  {
+    title: 'Buy a home',
+    body: 'Search, tour and negotiate with a buyer’s agent in your corner.',
+    href: '/buyers/',
+    Icon: Home,
+  },
+  {
+    title: 'Sell your home',
+    body: 'Pricing, preparation and marketing built around your timeline.',
+    href: '/sellers/',
+    Icon: KeyRound,
+  },
+  {
+    title: 'Run the numbers',
+    body: 'Payment, affordability and closing-cost calculators.',
+    href: '/mortgage/',
+    Icon: Calculator,
+  },
+  {
+    title: 'Explore cities',
+    body: 'Nine Orange County guides, from Anaheim to Newport Beach.',
+    href: '/#areas',
+    Icon: MapPin,
+  },
+];
+---
+
+<section class="border-b border-border bg-background pb-10 pt-10">
+  <div class="container mx-auto px-6">
+    <div class="mx-auto grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        links.map(({ title, body, href, Icon }) => (
+          <a
+            href={href}
+            class="group rounded-xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-md"
+          >
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10 text-primary">
+              <Icon size={17} aria-hidden="true" />
+            </span>
+            <span class="mt-3 flex items-center gap-1.5 text-sm font-bold text-foreground">
+              {title}
+              <ArrowUpRight
+                size={14}
+                className="text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
+                aria-hidden="true"
+              />
+            </span>
+            <span class="mt-1 block text-xs leading-relaxed text-muted-foreground">{body}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

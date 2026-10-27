@@ -1,7 +1,8 @@
-# Adam the Realtor — Contact Experience
+# Adam the Realtor — Website
 
-A rebuild of [adamtherealtor.com/contact](https://adamtherealtor.com/contact) using
-**Astro 7** with **React islands** and **Tailwind CSS 3**.
+Astro 7 site for [adamtherealtor.com](https://www.adamtherealtor.com): homepage,
+about, buyer and seller guides, nine Orange County city guides, and the contact
+experience. Built with **React islands** and **Tailwind CSS 3**.
 
 ## Stack
 
@@ -176,3 +177,35 @@ in front of it.
 
 `PUBLIC_SITE_URL` drives the canonical URL, Open Graph tags and JSON-LD, so set
 it to the live domain before the first production build.
+
+
+## Content model
+
+Long-form copy lives in `src/content/pages/*.md` and is validated by
+`src/content.config.ts`. Each file owns one route:
+
+| File | Route |
+| --- | --- |
+| `home.md` | `/` |
+| `about.md` | `/about/` |
+| `buyers.md` | `/buyers/` |
+| `sellers.md` | `/sellers/` |
+| `{city}-ca-home-for-sale.md` | `/{city}-ca-home-for-sale/` |
+
+Frontmatter holds the SEO fields (`title`, `description`, `h1`, `eyebrow`,
+`route`, `lede`, `city`, `faqs`). `PageLayout.astro` renders the hero, prose,
+FAQ accordion, city cross-links and CTA band, and emits the matching schema
+(`RealEstateAgent`, `WebPage`/`CollectionPage`, `BreadcrumbList`, `FAQPage`).
+
+City links, navigation and footer areas come from `src/data/site.ts`, so adding
+a city means adding one Markdown file plus one entry in `cityPages`.
+
+## Technical SEO
+
+- Canonicals, OG/Twitter tags and absolute URLs derive from `PUBLIC_SITE_URL`
+  (defaults to `https://www.adamtherealtor.com`).
+- `/sitemap.xml` and `/robots.txt` are generated at build time from the content
+  collection and `site.url`.
+- Trailing-slash URLs everywhere (`trailingSlash: 'always'`), matching the
+  directory output served by Bunny CDN.
+- `404.html` is `noindex, follow` and links to every main section.

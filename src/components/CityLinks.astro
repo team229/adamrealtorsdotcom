@@ -1,0 +1,75 @@
+---
+import { ArrowUpRight } from 'lucide-react';
+import { cityPages } from '@/data/site';
+
+interface Props {
+  current?: string;
+  id?: string;
+  heading?: string;
+  intro?: string;
+}
+
+const {
+  current,
+  id,
+  heading = 'Explore Orange County Cities',
+  intro = 'Every city has a different price floor, commute pattern and housing mix. Start with the guide for the area you are considering.',
+} = Astro.props;
+
+const cities = cityPages.filter((city) => city.name !== current);
+---
+
+<section id={id} class="scroll-mt-24 py-16 sm:py-20">
+  <div class="container mx-auto px-6">
+    <div class="mx-auto max-w-6xl">
+      <div data-reveal class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-2xl">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">
+            Service areas
+          </p>
+          <h2
+            class="mt-3 text-3xl font-bold leading-tight text-foreground sm:text-[34px]"
+            style="font-family: var(--font-heading)"
+          >
+            {heading}
+          </h2>
+          <p class="mt-3 text-sm leading-relaxed text-muted-foreground">{intro}</p>
+        </div>
+        <a
+          href="/contact/"
+          class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80"
+        >
+          Not sure where to start? Ask Adam
+          <ArrowUpRight size={15} aria-hidden="true" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          cities.map((city) => (
+            <a
+              href={city.route}
+              data-reveal
+              class="group flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-5 py-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-md"
+            >
+              <span>
+                <span
+                  class="block text-base font-bold text-foreground"
+                  style="font-family: var(--font-heading)"
+                >
+                  {city.name}
+                </span>
+                <span class="text-xs text-muted-foreground">Houses for sale & market guide</span>
+              </span>
+              <ArrowUpRight
+                size={16}
+                className="shrink-0 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
+                aria-hidden="true"
+              />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

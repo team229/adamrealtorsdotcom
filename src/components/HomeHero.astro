@@ -1,0 +1,105 @@
+---
+import { Phone, Search } from 'lucide-react';
+import { searchHomesHref, site } from '@/data/site';
+---
+
+<section
+  aria-label="Find your Southern California home"
+  class="relative isolate mt-16 flex min-h-[calc(100svh-4rem)] flex-col overflow-hidden bg-[#0b1c33]"
+>
+  <img
+    src="/images/hero-socal.webp"
+    srcset="/images/hero-socal-960.webp 960w, /images/hero-socal.webp 1920w"
+    sizes="100vw"
+    alt=""
+    width="1920"
+    height="1080"
+    fetchpriority="high"
+    decoding="async"
+    class="absolute inset-0 -z-20 h-full w-full object-cover"
+  />
+  <div
+    class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/35 to-black/20"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute inset-0 -z-10"
+    style="background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.45) 100%)"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-black/60 to-transparent"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative z-10 flex flex-1 flex-col items-center justify-center gap-6 px-4 py-20 text-center sm:gap-8 sm:px-6 sm:py-24">
+    <div>
+      <p class="mb-3 text-sm font-semibold uppercase tracking-[0.22em] text-white/70 md:text-base">
+        The SoCal Realtors
+      </p>
+      <h1
+        class="mx-auto max-w-4xl text-[34px] font-bold leading-[1.08] text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.5)] sm:text-5xl md:text-6xl"
+        style="font-family: var(--font-heading)"
+      >
+        Find Your Place. <span class="text-accent">Live Your Story.</span>
+      </h1>
+    </div>
+
+    <div class="w-full max-w-2xl">
+      <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-white sm:text-base">
+        Search your Southern California home using the official CRMLS search
+      </p>
+      <form id="hero-search" class="flex items-center overflow-hidden rounded-xl shadow-2xl" role="search">
+        <div class="relative flex-1">
+          <Search
+            size={16}
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-foreground/40"
+            aria-hidden="true"
+          />
+          <input
+            type="text"
+            name="q"
+            placeholder="City, address or ZIP"
+            aria-label="Search homes by address, neighborhood, city or zip code"
+            class="w-full bg-white py-3.5 pl-10 pr-3 text-sm text-foreground outline-none placeholder:text-foreground/40 sm:py-4 sm:pl-11 sm:pr-4"
+            autocomplete="off"
+          />
+        </div>
+        <button
+          type="submit"
+          class="shrink-0 bg-primary px-4 py-3.5 text-xs font-bold uppercase tracking-wider text-primary-foreground transition-opacity hover:opacity-90 sm:px-6 sm:py-4 sm:text-sm"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div class="absolute bottom-0 right-4 z-10 hidden flex-col items-end lg:flex xl:right-10">
+    <a
+      href="/contact/"
+      class="mb-2 inline-flex items-center gap-2 rounded-full border border-white/30 bg-[#0b1c33]/85 px-4 py-2 text-sm font-medium text-white shadow-lg backdrop-blur-sm transition-colors hover:border-white/60 hover:bg-[#0b1c33]"
+    >
+      <Phone size={14} aria-hidden="true" />
+      Need Help?
+    </a>
+    <img
+      src="/images/adam-floating-avatar.png"
+      alt={`${site.agentFullName}, ${site.agentTitle}`}
+      width="524"
+      height="990"
+      class="h-[240px] w-auto object-contain object-bottom xl:h-[290px]"
+    />
+  </div>
+</section>
+
+<script define:vars={{ searchUrl: searchHomesHref }}>
+  const form = document.getElementById('hero-search');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    window.open(searchUrl, '_blank', 'noopener,noreferrer');
+  });
+</script>

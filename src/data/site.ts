@@ -10,7 +10,7 @@ export interface NavItem {
 }
 
 export interface NavGroup extends NavItem {
-  items: NavItem[];
+  items?: NavItem[];
 }
 
 export interface SocialLink {
@@ -40,7 +40,7 @@ export interface ContactMethod {
  * Set PUBLIC_SITE_URL at build time to match the live domain
  * (e.g. PUBLIC_SITE_URL=https://adamrealtorsdotcom.com npm run build).
  */
-export const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://adamtherealtor.com';
+export const SITE_URL = import.meta.env.PUBLIC_SITE_URL || 'https://www.adamtherealtor.com';
 
 export const site = {
   name: 'Adam the Realtor',
@@ -63,44 +63,38 @@ export const site = {
   portrait: '/images/adam-portrait.png',
 } as const;
 
-/** Primary navigation with dropdown menus. */
-export const nav: NavGroup[] = [
+/** Canonical locations used for internal linking, navigation and schema. */
+export interface CityPage {
+  name: string;
+  slug: string;
+  route: string;
+}
+
+export const cityPages: CityPage[] = [
+  { name: 'Anaheim', slug: 'anaheim-ca-home-for-sale', route: '/anaheim-ca-home-for-sale/' },
+  { name: 'Fullerton', slug: 'fullerton-ca-home-for-sale', route: '/fullerton-ca-home-for-sale/' },
   {
-    label: 'Buy',
-    href: '/buy',
-    items: [
-      {
-        label: 'Search Homes',
-        href: 'https://adamshaaban.sites.c21.homes/search/#status=active&sold_days=180&pstatus=1%2C11&ls_conversion=acres&location_search_field=300%20E%20Commonwealth%20Ave%2C%20Fullerton%2C%20CA%2092832%2C%20USA&drive_time=09%3A00&drive_duration=15&drive_avoid_ferry=1&drive_departure=1&ss_locale=en-US&ss_email_freq=40&ss_send_zero_result=1&center_lat=33.87040629619043&center_lon=-117.91992655659988&center_lat_pan=33.87040629619043&center_lon_pan=-117.91992655659988&geotype=circle&pgsize=20&startidx=0&sort_by=1&company_uuid=19637992&commute=0&buffer_miles=1&geospatial=true&agent_uuid=a22c6308-ef0b-4be8-8764-be65c7effe93&ptype=1%2C2%2C3%2C4%2C5%2C7%2C9%2C8&searchType=criteria&omit_hidden=true&ex_pend=true&currency=USD',
-        external: true,
-      },
-      { label: 'Investor Calculator', href: '/tools/investor' },
-      { label: 'Rent vs Buy Calculator', href: '/mortgage/rent-vs-buy' },
-      { label: 'Home Affordability Calculator', href: '/mortgage/affordability' },
-      { label: 'Market Report', href: '/market-report' },
-    ],
+    name: 'Garden Grove',
+    slug: 'garden-grove-ca-home-for-sale',
+    route: '/garden-grove-ca-home-for-sale/',
   },
   {
-    label: 'Sell',
-    href: '/sell',
-    items: [
-      {
-        label: 'Get a Home Value Estimate',
-        href: 'https://app.cloudcma.com/api_widget/806ed06610f9789526ca7ec97a55a11d/show?post_url=https://app.cloudcma.com&source_url=ua',
-        external: true,
-      },
-      { label: 'Net Proceeds Calculator', href: '/sell/proceeds' },
-      { label: 'Request a Consultation', href: '/contact' },
-    ],
+    name: 'Huntington Beach',
+    slug: 'huntington-beach-ca-home-for-sale',
+    route: '/huntington-beach-ca-home-for-sale/',
   },
+  { name: 'Irvine', slug: 'irvine-ca-home-for-sale', route: '/irvine-ca-home-for-sale/' },
+  { name: 'Long Beach', slug: 'long-beach-ca-home-for-sale', route: '/long-beach-ca-home-for-sale/' },
   {
-    label: 'Get a Mortgage',
-    href: '/mortgage',
-    items: [
-      { label: 'Estimate Your Mortgage Payment', href: '/mortgage/calculator' },
-      { label: 'Affordability Calculator', href: '/mortgage/affordability' },
-      { label: 'Closing Costs Calculator', href: '/mortgage/closing-costs' },
-    ],
+    name: 'Newport Beach',
+    slug: 'newport-beach-ca-home-for-sale',
+    route: '/newport-beach-ca-home-for-sale/',
+  },
+  { name: 'Orange', slug: 'orange-ca-home-for-sale', route: '/orange-ca-home-for-sale/' },
+  {
+    name: 'Westminster',
+    slug: 'westminster-ca-home-for-sale',
+    route: '/westminster-ca-home-for-sale/',
   },
 ];
 
@@ -112,6 +106,41 @@ export const homeValuationHref =
 
 export const searchHomesHref =
   'https://adamshaaban.sites.c21.homes/search/#status=active&sold_days=180&pstatus=1%2C11&ls_conversion=acres&location_search_field=300%20E%20Commonwealth%20Ave%2C%20Fullerton%2C%20CA%2092832%2C%20USA&drive_time=09%3A00&drive_duration=15&drive_avoid_ferry=1&drive_departure=1&ss_locale=en-US&ss_email_freq=40&ss_send_zero_result=1&center_lat=33.87040629619043&center_lon=-117.91992655659988&center_lat_pan=33.87040629619043&center_lon_pan=-117.91992655659988&geotype=circle&pgsize=20&startidx=0&sort_by=1&company_uuid=19637992&commute=0&buffer_miles=1&geospatial=true&agent_uuid=a22c6308-ef0b-4be8-8764-be65c7effe93&ptype=1%2C2%2C3%2C4%2C5%2C7%2C9%2C8&searchType=criteria&omit_hidden=true&ex_pend=true&currency=USD';
+
+/** Primary navigation. Groups without items render as a single link. */
+export const nav: NavGroup[] = [
+  { label: 'Home', href: '/' },
+  {
+    label: 'Buy',
+    href: '/buyers/',
+    items: [
+      { label: 'Buying Guide', href: '/buyers/' },
+      { label: 'Search Homes for Sale', href: searchHomesHref, external: true },
+      { label: 'Get Pre-Approved', href: '/mortgage/' },
+      { label: 'Request a Consultation', href: '/contact/' },
+    ],
+  },
+  {
+    label: 'Sell',
+    href: '/sellers/',
+    items: [
+      { label: 'Selling Guide', href: '/sellers/' },
+      { label: 'Get a Home Value Estimate', href: homeValuationHref, external: true },
+      { label: 'Request a Consultation', href: '/contact/' },
+    ],
+  },
+  {
+    label: 'Get a Mortgage',
+    href: '/mortgage/',
+    items: [
+      { label: 'Mortgage Center', href: '/mortgage/' },
+      { label: 'Payment Calculator', href: '/mortgage/#calculator' },
+      { label: 'Affordability Calculator', href: '/mortgage/#affordability' },
+      { label: 'Closing Costs', href: '/mortgage/#closing-costs' },
+    ],
+  },
+  { label: 'About', href: '/about/' },
+];
 
 /** Social profiles rendered in the footer. */
 export const socials: SocialLink[] = [
@@ -144,10 +173,10 @@ export const socials: SocialLink[] = [
 
 export const contact = {
   meta: {
-    title: 'Contact Adam Shaaban — Southern California REALTOR | Century 21 Affiliated',
+    title: 'Contact Adam Shaaban | Century 21 Affiliated',
     description:
-      "Get in touch with Adam Shaaban. Whether you're buying, selling, investing, or just have questions about Southern California real estate — I'm here to help. Free consultation, no pressure.",
-    ogImage: 'https://adamtherealtor.com/airo-assets/images/pages/contact/adam-portrait',
+      'Talk to Adam Shaaban about buying, selling, or investing in Southern California real estate. Free consultation, no pressure — call, text, or send a message.',
+    ogImage: `${SITE_URL}/images/adam-portrait.png`,
   },
   hero: {
     badge: "Let's Talk",
@@ -275,16 +304,16 @@ export const contact = {
       {
         id: 't2',
         icon: 'calculator',
-        title: 'Browse Tools',
-        body: 'Affordability, rent vs. buy, and investor calculators to plan your move.',
-        href: '/tools/investor',
+        title: 'Buyers Guide',
+        body: 'Search, offer, inspect, close — a step-by-step walkthrough of buying in Orange County.',
+        href: '/buyers/',
       },
       {
         id: 't3',
         icon: 'trending-up',
-        title: 'Investment Guide',
-        body: 'Neighborhood insights and market data to sharpen your next decision.',
-        href: '/market-report',
+        title: 'Sellers Guide',
+        body: 'Pricing, preparation, marketing and negotiation — what selling actually involves.',
+        href: '/sellers/',
       },
     ],
   },
@@ -292,21 +321,21 @@ export const contact = {
 
 export const footerLinks = {
   buy: [
+    { label: 'Buyers Guide', href: '/buyers/' },
     { label: 'Search Homes', href: searchHomesHref, external: true },
-    { label: 'Investor Calculator', href: '/tools/investor' },
-    { label: 'Rent vs Buy Calculator', href: '/mortgage/rent-vs-buy' },
-    { label: 'Home Affordability Calculator', href: '/mortgage/affordability' },
+    { label: 'Get Pre-Approved', href: '/contact/' },
+    { label: 'About Adam', href: '/about/' },
   ],
   sell: [
+    { label: 'Sellers Guide', href: '/sellers/' },
     { label: 'Get a Home Value Estimate', href: homeValuationHref, external: true },
-    { label: 'Net Proceeds Calculator', href: '/sell/proceeds' },
-    { label: 'Request a Consultation', href: '/contact' },
-    { label: 'Market Report', href: '/market-report' },
+    { label: 'Request a Consultation', href: '/contact/' },
     { label: 'Neighborhood News', href: neighborhoodNewsHref, external: true },
   ],
+  areas: cityPages.map((city) => ({ label: city.name, href: city.route })),
   legal: [
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Terms of Service', href: '/terms' },
-    { label: 'Accessibility', href: '/accessibility' },
+    { label: 'Privacy Policy', href: '/privacy/' },
+    { label: 'Terms of Use', href: '/terms/' },
+    { label: 'Accessibility', href: '/accessibility/' },
   ],
 };

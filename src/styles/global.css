@@ -43,7 +43,7 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground font-sans overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -123,5 +123,78 @@
       transform: none !important;
       animation: none !important;
     }
+  }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------
+     Long-form page body (city guides, buyer/seller guides, about).
+     Scoped so contact and homepage-specific components keep their
+     existing treatment.
+     ------------------------------------------------------------------ */
+  .page-prose {
+    @apply text-[17px] leading-[1.75] text-foreground/80;
+  }
+
+  .page-prose > p:first-child {
+    @apply text-lg leading-relaxed text-foreground/85;
+  }
+
+  .page-prose p {
+    @apply my-5;
+  }
+
+  .page-prose h2 {
+    @apply mb-4 mt-12 text-[26px] font-bold leading-tight text-foreground sm:text-[31px];
+    font-family: var(--font-heading);
+    scroll-margin-top: 6rem;
+  }
+
+  .page-prose h3 {
+    @apply mb-3 mt-9 text-xl font-bold leading-snug text-foreground sm:text-[22px];
+    font-family: var(--font-heading);
+    scroll-margin-top: 6rem;
+  }
+
+  .page-prose h2 + p,
+  .page-prose h3 + p {
+    @apply mt-0;
+  }
+
+  .page-prose a:not(.cta-inline) {
+    @apply font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:decoration-primary;
+  }
+
+  .page-prose strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .page-prose ul {
+    @apply my-6 space-y-2.5;
+  }
+
+  .page-prose ul > li {
+    @apply relative pl-6;
+  }
+
+  .page-prose ul > li::before {
+    content: '';
+    @apply absolute left-0 top-[0.62em] h-1.5 w-1.5 rounded-full bg-accent;
+  }
+
+  .page-prose ol {
+    @apply my-6 list-decimal space-y-2.5 pl-6;
+  }
+
+  .page-prose blockquote {
+    @apply my-6 border-l-2 border-accent pl-5 italic text-muted-foreground;
+  }
+
+  .page-prose .cta-inline {
+    @apply my-2 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/[0.04] px-5 py-2.5 text-sm font-semibold text-primary no-underline transition-colors hover:border-primary hover:bg-primary hover:text-white;
+  }
+
+  .page-prose .cta-inline + .cta-inline {
+    @apply ml-0 sm:ml-3;
   }
 }

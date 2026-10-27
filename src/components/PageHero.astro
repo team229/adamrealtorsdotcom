@@ -1,0 +1,97 @@
+---
+import { ArrowRight, Phone } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import type { Crumb } from '@/lib/seo';
+import { site } from '@/data/site';
+
+export type HeroCta = {
+  label: string;
+  href: string;
+  external?: boolean;
+  variant?: 'primary' | 'secondary';
+};
+
+interface Props {
+  eyebrow: string;
+  h1: string;
+  lede: string;
+  crumbs: Crumb[];
+  ctas: HeroCta[];
+  city?: string;
+}
+
+const { eyebrow, h1, lede, crumbs, ctas, city } = Astro.props;
+
+const trust = ['Century 21 Affiliated', 'DRE #02254921', '10+ years in sales', 'Serving SoCal since 2007'];
+---
+
+<section class="relative overflow-hidden bg-[hsl(217,60%,16%)] text-white">
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <div
+      class="absolute -left-24 top-0 h-[360px] w-[360px] rounded-full bg-accent/15 blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute -right-24 top-24 h-[420px] w-[420px] rounded-full bg-primary/40 blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"
+    >
+    </div>
+  </div>
+
+  <div class="container relative z-10 mx-auto px-4 pb-12 pt-24 sm:px-6 sm:pb-14 sm:pt-32">
+    <Breadcrumbs crumbs={crumbs} />
+
+    <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">
+      {eyebrow}
+    </p>
+
+    <h1
+      class="mt-4 max-w-4xl text-[30px] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-[56px]"
+      style="font-family: var(--font-heading)"
+    >
+      {h1}
+    </h1>
+
+    {lede && (
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">{lede}</p>
+    )}
+
+    {ctas.length > 0 && (
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+      {
+        ctas.map((cta) => (
+          <a
+            href={cta.href}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener noreferrer' : undefined}
+            class={
+              cta.variant === 'secondary'
+                ? 'inline-flex items-center justify-center gap-2 rounded-full border border-white/25 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/10'
+                : 'inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-[#2a1f12] shadow-lg shadow-black/20 transition-all hover:-translate-y-0.5 hover:bg-accent/90'
+            }
+          >
+            {cta.label}
+            <ArrowRight size={16} aria-hidden="true" />
+          </a>
+        ))
+      }
+    </div>
+    )}
+
+    <div class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-white/60">
+      <a
+        href={site.phoneHref}
+        class="inline-flex items-center gap-1.5 font-semibold text-white/80 transition-colors hover:text-white"
+      >
+        <Phone size={13} aria-hidden="true" />
+        {site.phone}
+      </a>
+      <span aria-hidden="true" class="hidden h-3 w-px bg-white/20 sm:block"></span>
+      {trust.map((item) => <span>{item}</span>)}
+      {city && <span class="sr-only">{city}, California</span>}
+    </div>
+  </div>
+</section>

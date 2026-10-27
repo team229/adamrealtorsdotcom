@@ -1,0 +1,176 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageHero from '@/components/PageHero.astro';
+import HomeHero from '@/components/HomeHero.astro';
+import HomeQuickLinks from '@/components/HomeQuickLinks.astro';
+import ContentAside from '@/components/ContentAside.astro';
+import FaqList from '@/components/FaqList.astro';
+import CityLinks from '@/components/CityLinks.astro';
+import CtaBand from '@/components/CtaBand.astro';
+import { homeValuationHref, searchHomesHref } from '@/data/site';
+import {
+  absolute,
+  agentSchema,
+  breadcrumbSchema,
+  faqSchema,
+  serviceSchema,
+  webPageSchema,
+  websiteSchema,
+  type Crumb,
+} from '@/lib/seo';
+
+interface Props {
+  entry: CollectionEntry<'pages'>;
+}
+
+const { entry } = Astro.props;
+const { title, description, h1, eyebrow, kind, route, lede, city, faqs, updated } = entry.data;
+
+const canonical = absolute(route);
+const { Content } = await render(entry);
+
+const crumbLabel =
+  kind === 'city'
+    ? `${city} Homes for Sale`
+    : kind === 'service'
+      ? route === '/buyers/'
+        ? 'Buyers'
+        : 'Sellers'
+      : kind === 'about'
+        ? 'About Adam'
+        : h1;
+
+const crumbs: Crumb[] =
+  kind === 'home'
+    ? []
+    : [
+        { name: 'Home', href: '/' },
+        { name: crumbLabel, href: route },
+      ];
+
+const ctas: { label: string; href: string; external?: boolean; variant?: 'primary' | 'secondary' }[] =
+  kind === 'legal'
+    ? []
+    : kind === 'home'
+    ? [
+        { label: 'Search Orange County Homes', href: searchHomesHref, external: true },
+        { label: 'Get a Home Value Estimate', href: homeValuationHref, external: true, variant: 'secondary' },
+      ]
+    : kind === 'city'
+      ? [
+          { label: `Search ${city} Homes`, href: searchHomesHref, external: true },
+          { label: 'Talk to Adam', href: '/contact/', variant: 'secondary' },
+        ]
+      : kind === 'service'
+        ? route === '/buyers/'
+          ? [
+              { label: 'Search Homes for Sale', href: searchHomesHref, external: true },
+              { label: 'Book a Buyer Consultation', href: '/contact/', variant: 'secondary' },
+            ]
+          : [
+              { label: 'Get My Home Value', href: homeValuationHref, external: true },
+              { label: 'Talk to Adam', href: '/contact/', variant: 'secondary' },
+            ]
+        : [
+            { label: 'Work With Adam', href: '/contact/' },
+            { label: 'Read the Guides', href: '/buyers/', variant: 'secondary' },
+          ];
+
+const faqHeading =
+  kind === 'city'
+    ? `${city} Real Estate FAQs`
+    : kind === 'about'
+      ? 'About Adam: Common Questions'
+      : kind === 'service'
+        ? route === '/buyers/'
+          ? 'Buying a Home in Orange County: FAQs'
+          : 'Selling a Home: FAQs'
+        : 'Orange County Real Estate FAQs';
+
+const ctaHeading =
+  kind === 'city'
+    ? `Buying or selling in ${city}?`
+    : kind === 'service'
+      ? route === '/buyers/'
+        ? 'Ready to start your home search?'
+        : 'Want to know what your home is worth?'
+      : kind === 'about'
+        ? "Let's talk about your real estate plans"
+        : "Let's talk about your real estate goals";
+
+const schemas = [
+  agentSchema(),
+  ...(kind === 'home' ? [websiteSchema()] : []),
+  webPageSchema({
+    url: canonical,
+    name: title,
+    description,
+    type: kind === 'about' ? 'AboutPage' : kind === 'city' ? 'CollectionPage' : 'WebPage',
+    updated,
+    city,
+  }),
+  ...(kind === 'service'
+    ? [
+        serviceSchema({
+          name: `${route === '/buyers/' ? 'Home buying' : 'Home selling'} representation in Orange County`,
+          description,
+          url: canonical,
+          serviceType:
+            route === '/buyers/'
+              ? 'Real estate buyer representation'
+              : 'Real estate seller representation',
+          cities: ['Anaheim', 'Fullerton', 'Garden Grove', 'Huntington Beach', 'Irvine', 'Long Beach', 'Newport Beach', 'Orange', 'Westminster'],
+        }),
+      ]
+    : []),
+  ...(crumbs.length ? [breadcrumbSchema(crumbs)] : []),
+  ...(faqs.length ? [faqSchema(faqs, canonical)] : []),
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  schema={schemas}
+>
+  {kind === 'home' ? (
+    <>
+      <HomeHero />
+      <HomeQuickLinks />
+    </>
+  ) : (
+    <PageHero eyebrow={eyebrow} h1={h1} lede={lede} crumbs={crumbs} ctas={ctas} city={city} />
+  )}
+
+  <section class="bg-background py-12 sm:py-16">
+    <div class="container mx-auto px-6">
+      <div
+        class:list={[
+          'mx-auto gap-12',
+          kind === 'home' || kind === 'legal'
+            ? 'max-w-3xl'
+            : 'grid max-w-6xl lg:grid-cols-[minmax(0,1fr)_300px]',
+        ]}
+      >
+        <article class="page-prose min-w-0">
+          <Content />
+        </article>
+        {kind !== 'home' && kind !== 'legal' && <ContentAside />}
+      </div>
+    </div>
+  </section>
+
+  {faqs.length > 0 && <FaqList faqs={faqs} heading={faqHeading} />}
+
+  {kind !== 'legal' && (
+    <CityLinks
+      current={city}
+      id={kind === 'home' ? 'areas' : undefined}
+      heading={kind === 'city' ? 'Explore Nearby Orange County Cities' : 'Explore Orange County Cities'}
+    />
+  )}
+
+  {kind !== 'legal' && <CtaBand heading={ctaHeading} city={city} />}
+</BaseLayout>
