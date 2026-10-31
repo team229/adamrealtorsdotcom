@@ -8,6 +8,7 @@ interface Props {
   title: string;
   description: string;
   ogImage?: string;
+  ogImageAlt?: string;
   canonical?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
@@ -19,6 +20,7 @@ const {
   title,
   description,
   ogImage = `${site.url}/images/og-adam-the-realtor.jpg`,
+  ogImageAlt = 'Adam Shaaban — Southern California real estate agent',
   canonical = new URL(Astro.url.pathname, site.url).href,
   ogType = 'website',
   noindex = false,
@@ -56,7 +58,7 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Adam Shaaban — Southern California real estate agent" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta property="og:site_name" content={site.name} />
 
     <meta name="twitter:card" content="summary_large_image" />

@@ -13,11 +13,16 @@ const pages = defineCollection({
     description: z.string().max(175),
     h1: z.string(),
     eyebrow: z.string(),
-    kind: z.enum(['home', 'about', 'service', 'city', 'legal']),
+    kind: z.enum(['home', 'about', 'service', 'city', 'legal', 'blog']),
     route: z.string().startsWith('/').endsWith('/'),
     lede: z.string(),
     updated: z.coerce.date().optional(),
     city: z.string().optional(),
+    /** Blog only: feature image path under /public and its alt text. */
+    image: z.string().optional(),
+    image_alt: z.string().optional(),
+    /** Blog only: short slug used for listings. */
+    slug: z.string().optional(),
     faqs: z
       .array(z.object({ q: z.string(), a: z.string() }))
       .default([]),

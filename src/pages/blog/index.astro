@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content';
+import { ArrowRight } from 'lucide-react';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumbs from '@/components/Breadcrumbs.astro';
+import { absolute, agentSchema, breadcrumbSchema, webPageSchema } from '@/lib/seo';
+import { site } from '@/data/site';
+
+const posts = (await getCollection('pages', ({ data }) => data.kind === 'blog')).sort(
+  (a, b) => (b.data.updated?.getTime() ?? 0) - (a.data.updated?.getTime() ?? 0),
+);
+
+const canonical = absolute('/blog/');
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blog/' },
+];
+
+const schemas = [
+  agentSchema(),
+  webPageSchema({
+    url: canonical,
+    name: 'Orange County Real Estate Guides | Adam the Realtor',
+    description:
+      'Practical guides on buying, selling, and owning a home in Orange County, written by Adam Shaaban at Century 21 Affiliated.',
+    type: 'CollectionPage',
+  }),
+  breadcrumbSchema(crumbs),
+];
+---
+
+<BaseLayout
+  title="Orange County Real Estate Guides | Adam the Realtor"
+  description="Practical guides on buying, selling, and owning a home in Orange County, written by Adam Shaaban at Century 21 Affiliated."
+  canonical={canonical}
+  schema={schemas}
+>
+  <section class="relative overflow-hidden bg-[hsl(217,60%,16%)] text-white">
+    <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+      <div class="absolute -left-24 top-0 h-[360px] w-[360px] rounded-full bg-accent/15 blur-3xl"></div>
+      <div class="absolute -right-24 top-24 h-[420px] w-[420px] rounded-full bg-primary/40 blur-3xl"></div>
+    </div>
+
+    <div class="container relative z-10 mx-auto px-4 pb-12 pt-24 sm:px-6 sm:pb-14 sm:pt-32">
+      <Breadcrumbs crumbs={crumbs} />
+      <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">Guides</p>
+      <h1
+        class="mt-4 max-w-3xl text-[30px] font-bold leading-[1.1] tracking-tight sm:text-5xl lg:text-[56px]"
+        style="font-family: var(--font-heading)"
+      >
+        Orange County real estate, explained plainly
+      </h1>
+      <p class="mt-5 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
+        What things cost, how the process actually runs, and which decisions move your number.
+        Written from the deals, not from a template.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-background py-12 sm:py-16">
+    <div class="container mx-auto max-w-5xl px-6">
+      {
+        posts.length === 0 ? (
+          <p class="text-muted-foreground">Guides are being published soon.</p>
+        ) : (
+          <ul class="grid gap-8">
+            {posts.map((post) => {
+              const { data } = post;
+              const published = data.updated;
+              return (
+                <li class="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+                  <a href={data.route} class="grid gap-0 md:grid-cols-[320px_minmax(0,1fr)]">
+                    {data.image && (
+                      <img
+                        src={data.image}
+                        alt={data.image_alt ?? data.h1}
+                        width="1600"
+                        height="900"
+                        loading="lazy"
+                        decoding="async"
+                        class="h-full max-h-[240px] w-full object-cover md:max-h-none"
+                      />
+                    )}
+                    <div class="flex flex-col justify-center p-6 sm:p-8">
+                      <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">
+                        {data.eyebrow}
+                      </p>
+                      <h2
+                        class="mt-3 text-xl font-bold leading-snug text-foreground sm:text-2xl"
+                        style="font-family: var(--font-heading)"
+                      >
+                        {data.h1}
+                      </h2>
+                      <p class="mt-3 text-sm leading-relaxed text-muted-foreground">
+                        {data.description}
+                      </p>
+                      <p class="mt-5 flex items-center gap-2 text-sm font-semibold text-primary">
+                        Read the guide
+                        <ArrowRight size={15} aria-hidden="true" />
+                      </p>
+                      {published && (
+                        <p class="mt-3 text-xs text-muted-foreground">
+                          Updated{' '}
+                          {published.toLocaleDateString('en-US', {
+                            month: 'long',
+                            day: 'numeric',
+                            year: 'numeric',
+                            timeZone: 'UTC',
+                          })}
+                        </p>
+                      )}
+                    </div>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

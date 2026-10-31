@@ -6,7 +6,7 @@ eyebrow: "Seller's Guide"
 kind: service
 route: /sellers/
 lede: "Price with evidence, prepare with purpose, and negotiate offers on your terms \u2014 with a Century 21 agent who sells in this market every day."
-updated: 2026-10-26
+updated: 2026-10-31
 faqs:
   - q: "How do I determine the right asking price for my house?"
     a: "A comparative market analysis can help estimate your home's market position by reviewing recent sales of similar properties, active competition, location, size, and condition. A real estate agent can use this information to discuss a pricing strategy that reflects your goals and current market conditions."
@@ -169,7 +169,7 @@ Confirm which items stay with the property, what must be removed, and the requir
 
 At closing, the required documents are completed, funds are distributed according to the closing statement, and the transaction is finalized once the applicable conditions have been met.
 
-Your final proceeds depend on the sale price, mortgage payoff, closing costs, commissions and other agreed fees, credits, taxes, and any other applicable expenses.
+Your final proceeds depend on the sale price, mortgage payoff, closing costs, commissions and other agreed fees, credits, taxes, and any other applicable expenses. For a line-by-line breakdown with a worked example, see [what it actually costs to sell a house in Orange County](/blog/cost-to-sell-a-house-orange-county/).
 
 ## Selling Your Home in Anaheim, CA
 

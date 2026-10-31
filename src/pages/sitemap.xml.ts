@@ -26,6 +26,12 @@ export const GET: APIRoute = async () => {
       changefreq: 'monthly',
       priority: '0.8',
     },
+    {
+      loc: absolute('/blog/'),
+      lastmod: FALLBACK_DATE,
+      changefreq: 'weekly',
+      priority: '0.7',
+    },
   ].sort((a, b) => a.loc.localeCompare(b.loc));
 
   const urls = entries

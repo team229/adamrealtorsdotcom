@@ -144,3 +144,38 @@ export function serviceSchema({
     areaServed: cities.map((city) => ({ '@type': 'City', name: city })),
   };
 }
+
+/** BlogPosting for /blog/ articles. Author reuses the site's agent entity. */
+export function articleSchema({
+  url,
+  headline,
+  description,
+  image,
+  published,
+  updated,
+  section,
+}: {
+  url: string;
+  headline: string;
+  description: string;
+  image?: string;
+  published: Date;
+  updated?: Date;
+  section?: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    headline,
+    description,
+    ...(image ? { image: absolute(image) } : {}),
+    datePublished: published.toISOString().slice(0, 10),
+    dateModified: (updated ?? published).toISOString().slice(0, 10),
+    ...(section ? { articleSection: section } : {}),
+    inLanguage: 'en-US',
+    author: { '@id': ORGANIZATION_ID, '@type': 'Person', name: site.agentFullName },
+    publisher: { '@id': ORGANIZATION_ID },
+  };
+}

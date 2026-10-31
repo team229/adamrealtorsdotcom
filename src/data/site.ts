@@ -140,6 +140,7 @@ export const nav: NavGroup[] = [
     ],
   },
   { label: 'About', href: '/about/' },
+  { label: 'Blog', href: '/blog/' },
 ];
 
 /** Social profiles rendered in the footer. */

@@ -8,10 +8,11 @@ import ContentAside from '@/components/ContentAside.astro';
 import FaqList from '@/components/FaqList.astro';
 import CityLinks from '@/components/CityLinks.astro';
 import CtaBand from '@/components/CtaBand.astro';
-import { homeValuationHref, searchHomesHref } from '@/data/site';
+import { homeValuationHref, searchHomesHref, site } from '@/data/site';
 import {
   absolute,
   agentSchema,
+  articleSchema,
   breadcrumbSchema,
   faqSchema,
   serviceSchema,
@@ -25,10 +26,14 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, description, h1, eyebrow, kind, route, lede, city, faqs, updated } = entry.data;
+const { title, description, h1, eyebrow, kind, route, lede, city, faqs, updated, image, image_alt } =
+  entry.data;
 
 const canonical = absolute(route);
 const { Content } = await render(entry);
+
+const isBlog = kind === 'blog';
+const published = updated ?? new Date('2026-10-31');
 
 const crumbLabel =
   kind === 'city'
@@ -39,15 +44,23 @@ const crumbLabel =
         : 'Sellers'
       : kind === 'about'
         ? 'About Adam'
-        : h1;
+        : isBlog
+          ? 'Blog'
+          : h1;
 
 const crumbs: Crumb[] =
   kind === 'home'
     ? []
-    : [
-        { name: 'Home', href: '/' },
-        { name: crumbLabel, href: route },
-      ];
+    : isBlog
+      ? [
+          { name: 'Home', href: '/' },
+          { name: 'Blog', href: '/blog/' },
+          { name: h1, href: route },
+        ]
+      : [
+          { name: 'Home', href: '/' },
+          { name: crumbLabel, href: route },
+        ];
 
 const ctas: { label: string; href: string; external?: boolean; variant?: 'primary' | 'secondary' }[] =
   kind === 'legal'
@@ -72,10 +85,15 @@ const ctas: { label: string; href: string; external?: boolean; variant?: 'primar
               { label: 'Get My Home Value', href: homeValuationHref, external: true },
               { label: 'Talk to Adam', href: '/contact/', variant: 'secondary' },
             ]
-        : [
-            { label: 'Work With Adam', href: '/contact/' },
-            { label: 'Read the Guides', href: '/buyers/', variant: 'secondary' },
-          ];
+        : isBlog
+          ? [
+              { label: 'Get My Home Value', href: homeValuationHref, external: true },
+              { label: 'Talk to Adam', href: '/contact/', variant: 'secondary' },
+            ]
+          : [
+              { label: 'Work With Adam', href: '/contact/' },
+              { label: 'Read the Guides', href: '/buyers/', variant: 'secondary' },
+            ];
 
 const faqHeading =
   kind === 'city'
@@ -86,7 +104,9 @@ const faqHeading =
         ? route === '/buyers/'
           ? 'Buying a Home in Orange County: FAQs'
           : 'Selling a Home: FAQs'
-        : 'Orange County Real Estate FAQs';
+        : isBlog
+          ? 'Selling Costs: Common Questions'
+          : 'Orange County Real Estate FAQs';
 
 const ctaHeading =
   kind === 'city'
@@ -97,7 +117,9 @@ const ctaHeading =
         : 'Want to know what your home is worth?'
       : kind === 'about'
         ? "Let's talk about your real estate plans"
-        : "Let's talk about your real estate goals";
+        : isBlog
+          ? 'Want a net sheet for your own address?'
+          : "Let's talk about your real estate goals";
 
 const schemas = [
   agentSchema(),
@@ -110,6 +132,19 @@ const schemas = [
     updated,
     city,
   }),
+  ...(isBlog
+    ? [
+        articleSchema({
+          url: canonical,
+          headline: h1,
+          description,
+          image,
+          published,
+          updated,
+          section: eyebrow,
+        }),
+      ]
+    : []),
   ...(kind === 'service'
     ? [
         serviceSchema({
@@ -133,6 +168,9 @@ const schemas = [
   title={title}
   description={description}
   canonical={canonical}
+  ogType={isBlog ? 'article' : 'website'}
+  ogImage={image ? absolute(image.replace(/\.webp$/, '-og.jpg')) : undefined}
+  ogImageAlt={isBlog ? image_alt : undefined}
   schema={schemas}
 >
   {kind === 'home' ? (
@@ -155,6 +193,40 @@ const schemas = [
         ]}
       >
         <article class="page-prose min-w-0">
+          {isBlog && (
+            <>
+              <p class="-mt-2 mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+                <span class="font-semibold text-foreground">By {site.agentFullName}</span>
+                <span aria-hidden="true">·</span>
+                <span>{site.brokerage}</span>
+                <span aria-hidden="true">·</span>
+                <span>{site.dre}</span>
+                <span aria-hidden="true">·</span>
+                <time datetime={published.toISOString().slice(0, 10)}>
+                  Updated{' '}
+                  {published.toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    timeZone: 'UTC',
+                  })}
+                </time>
+              </p>
+              {image && (
+                <figure class="mb-10">
+                  <img
+                    src={image}
+                    alt={image_alt ?? h1}
+                    width="1600"
+                    height="900"
+                    loading="eager"
+                    decoding="async"
+                    class="w-full rounded-2xl border border-border object-cover shadow-sm"
+                  />
+                </figure>
+              )}
+            </>
+          )}
           <Content />
         </article>
         {kind !== 'home' && kind !== 'legal' && <ContentAside />}
