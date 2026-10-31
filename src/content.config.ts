@@ -23,6 +23,10 @@ const pages = defineCollection({
     image_alt: z.string().optional(),
     /** Blog only: short slug used for listings. */
     slug: z.string().optional(),
+    /** Blog only: heading above the FAQ accordion on this post. */
+    faq_heading: z.string().optional(),
+    /** Blog only: heading above the closing CTA band on this post. */
+    cta_heading: z.string().optional(),
     faqs: z
       .array(z.object({ q: z.string(), a: z.string() }))
       .default([]),

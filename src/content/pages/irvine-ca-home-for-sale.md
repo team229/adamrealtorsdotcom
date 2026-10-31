@@ -6,7 +6,7 @@ eyebrow: "Irvine, CA"
 kind: city
 route: /irvine-ca-home-for-sale/
 lede: "Planned villages, parks, and access to major employment centers \u2014 compare Irvine homes with the full picture in view."
-updated: 2026-10-26
+updated: 2026-10-31
 city: "Irvine"
 faqs:
   - q: "How can Adam the Realtor help me buy a home in Irvine?"
@@ -47,7 +47,7 @@ Irvine's residential landscape includes planned villages, established neighborho
 
 Some buyers prioritize a larger home with a private yard. Others prefer a condo or townhouse with less exterior maintenance. Families may want to compare school attendance boundaries and nearby amenities, while commuters may focus on access to major roads and employment centers.
 
-When reviewing an Irvine CA home for sale, look beyond the asking price and listing photos. HOA fees, Mello-Roos taxes where applicable, property taxes, insurance, maintenance, parking, and community rules can all affect the overall cost of ownership.
+When reviewing an Irvine CA home for sale, look beyond the asking price and listing photos. HOA fees, Mello-Roos taxes where applicable, property taxes, insurance, maintenance, parking, and community rules can all affect the overall cost of ownership. If you are deciding between an attached home and a detached one, [condo or house in Orange County](/blog/condo-vs-house-orange-county/) compares the monthly cost, the HOA documents, and the financing differences.
 
 ### Types of Properties for Sale in Irvine
 

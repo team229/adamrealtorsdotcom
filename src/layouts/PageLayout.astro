@@ -26,7 +26,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, description, h1, eyebrow, kind, route, lede, city, faqs, updated, image, image_alt } =
+const { title, description, h1, eyebrow, kind, route, lede, city, faqs, updated, image, image_alt, faq_heading, cta_heading } =
   entry.data;
 
 const canonical = absolute(route);
@@ -105,7 +105,7 @@ const faqHeading =
           ? 'Buying a Home in Orange County: FAQs'
           : 'Selling a Home: FAQs'
         : isBlog
-          ? 'Selling Costs: Common Questions'
+          ? (faq_heading ?? 'Common Questions')
           : 'Orange County Real Estate FAQs';
 
 const ctaHeading =
@@ -118,7 +118,7 @@ const ctaHeading =
       : kind === 'about'
         ? "Let's talk about your real estate plans"
         : isBlog
-          ? 'Want a net sheet for your own address?'
+          ? (cta_heading ?? 'Want to talk through your numbers?')
           : "Let's talk about your real estate goals";
 
 const schemas = [

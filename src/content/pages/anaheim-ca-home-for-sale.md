@@ -6,7 +6,7 @@ eyebrow: "Anaheim, CA"
 kind: city
 route: /anaheim-ca-home-for-sale/
 lede: "From established neighborhoods to Anaheim Hills, compare homes, pricing, and the details that shape a good purchase."
-updated: 2026-10-26
+updated: 2026-10-31
 city: "Anaheim"
 faqs:
   - q: "How do I find houses for sale in Anaheim, CA?"
@@ -58,7 +58,7 @@ Consider condos and townhomes if you're interested in a different style of homeo
 
 Homes in Anaheim Hills
 
-Anaheim Hills offers a different residential setting, with hillside communities and a selection of larger homes. Property prices, lot characteristics, views, and access to amenities can vary by neighborhood.
+Anaheim Hills offers a different residential setting, with hillside communities and a selection of larger homes. Property prices, lot characteristics, views, and access to amenities can vary by neighborhood. If you are weighing a hillside purchase, [what to know before buying in Anaheim Hills](/blog/moving-to-anaheim-hills/) covers the inspection, insurance, and school checks worth doing first.
 
 Established Neighborhood Homes
 

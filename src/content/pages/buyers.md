@@ -6,7 +6,7 @@ eyebrow: "Buyer's Guide"
 kind: service
 route: /buyers/
 lede: "Search homes, understand the market, and get represented from your first showing to the day you get your keys."
-updated: 2026-10-26
+updated: 2026-10-31
 faqs:
   - q: "How do I start buying a house in Orange County?"
     a: "Start with a conversation about your goals and budget, then get pre-approved for a mortgage. After that, we set up your home search and begin touring."
@@ -115,7 +115,7 @@ Buying your first home is a big step, and the questions are normal: How much do 
 - Get pre-approved before you start touring homes
 - Budget for closing costs, inspections and moving expenses, not just the down payment
 - Check HOA fees and property taxes, since they affect your monthly payment
-- Ask about down payment assistance programs that may be available
+- Ask about down payment assistance programs that may be available. The [guide to first-time buyer programs in Orange County](/blog/first-time-home-buyer-programs-orange-county/) explains how the second-lien mechanics actually work.
 - Keep your finances steady: avoid new debt or big purchases during escrow
 
 ## Buying a Luxury Home in Orange County

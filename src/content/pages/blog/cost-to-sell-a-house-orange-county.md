@@ -6,6 +6,8 @@ eyebrow: "Seller Costs"
 kind: "blog"
 route: /blog/cost-to-sell-a-house-orange-county/
 slug: cost-to-sell-a-house-orange-county
+faq_heading: "Selling costs: common questions"
+cta_heading: "Want a net sheet for your own address?"
 lede: "On a $1,000,000 sale, the lines in this guide add up to about $70,000, and about $50,000 of that is agent compensation you negotiate. The fixed costs are smaller than most sellers expect: escrow, title insurance, recording, and the Orange County documentary transfer tax at $1.10 per $1,000."
 updated: 2026-10-31
 image: /images/blog/cost-to-sell-a-house-orange-county.webp
