@@ -73,7 +73,7 @@ The seller delivers the transfer disclosure statement, natural hazard disclosure
 
 ### 6. Inspections
 
-General, sewer, roof, foundation, chimney, pool. Whatever fits the house. You're buying information, not a punch list.
+General, sewer, roof, foundation, chimney, pool. Whatever fits the house. You're buying information, not a punch list. Which add-ons are worth paying for in this county is covered in [what a California home inspection actually covers](/blog/home-inspection-california-what-buyers-should-know/).
 
 ### 7. Appraisal
 
