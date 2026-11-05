@@ -50,6 +50,18 @@ const schemas = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
     )}
     <meta name="theme-color" content="#1a3a6b" />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PLJF61KKPF" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-PLJF61KKPF');
+    </script>
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={ogType} />
