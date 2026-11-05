@@ -129,7 +129,7 @@ If your date is roughly three months out, this is the order I use.
 
 **Weeks 3 and 4: the walkthrough.** Room by room, inside and out. Two lists: what signals neglect, and what an inspector will flag. Book the trades now, because painters and cleaners fill up in spring. If the house is older, order a pre-listing inspection so you are not surprised later.
 
-**Weeks 5 to 8: the work.** Paint, floors, lighting, landscaping, deep clean, and the small repairs. In parallel, start the paperwork: the Transfer Disclosure Statement, the Seller Property Questionnaire, the natural hazard disclosure, HOA documents if there is an association. The package takes longer to assemble than sellers expect, and it is easier to build before a buyer is involved.
+**Weeks 5 to 8: the work.** Paint, floors, lighting, landscaping, deep clean, and the small repairs. In parallel, start the paperwork: the Transfer Disclosure Statement, the Seller Property Questionnaire, the natural hazard disclosure, HOA documents if there is an association. The package takes longer to assemble than sellers expect, and it is easier to build before a buyer is involved. Here is [what actually has to be in that package](/blog/california-seller-disclosures-what-to-disclose/).
 
 **Weeks 9 and 10: presentation.** Photography, floor plan, staging if it fits the price band, sign, lockbox, final punch list. Photograph on a clear morning, which in coastal areas may mean waiting for the fog to lift.
 
