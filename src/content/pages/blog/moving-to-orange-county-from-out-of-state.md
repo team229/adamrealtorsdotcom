@@ -11,7 +11,7 @@ cta_heading: "Planning the move?"
 lede: "Five things surprise out of state buyers here: property tax resets to your purchase price, state income tax starts partway through the year, insurance can be hard to place, schools follow the address rather than the city, and the house itself will look different. This post takes them one at a time."
 image: /images/blog/moving-to-orange-county-from-out-of-state.webp
 image_alt: "Couple seen from behind at the open front door of a bright townhome, holding new house keys beside moving boxes"
-updated: 2026-11-26
+updated: 2026-11-06
 faqs:
   - q: "How long do I have to register my car in California?"
     a: "Twenty days from the date you become a California resident, take a California job, or bring the vehicle into the state, whichever comes first. Book the appointment early, because they go quickly. Bring your out of state title or registration, proof of insurance and identification. Most gasoline vehicles from 1976 onward also need a California smog certificate, and an out of state smog test is not accepted."

@@ -2,15 +2,28 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { absolute } from '@/lib/seo';
 
+/** Used for pages that carry no `updated` value in frontmatter. */
 const FALLBACK_DATE = '2026-10-26';
+
+/** Never emit a lastmod in the future: crawlers discount the whole file when they see one. */
+const today = () => new Date().toISOString().slice(0, 10);
+const clamp = (date: string) => (date > today() ? today() : date);
 
 export const GET: APIRoute = async () => {
   const pages = await getCollection('pages');
+  const blog = pages.filter((entry) => entry.data.kind === 'blog');
+
+  // The hub changes whenever a post does, so it inherits the newest post date.
+  const latestBlogDate = blog
+    .map((entry) => entry.data.updated?.toISOString().slice(0, 10))
+    .filter((date): date is string => Boolean(date))
+    .sort()
+    .at(-1);
 
   const entries = [
     ...pages.map((entry) => ({
       loc: absolute(entry.data.route),
-      lastmod: entry.data.updated?.toISOString().slice(0, 10) ?? FALLBACK_DATE,
+      lastmod: clamp(entry.data.updated?.toISOString().slice(0, 10) ?? FALLBACK_DATE),
       changefreq: entry.data.kind === 'home' ? 'weekly' : 'monthly',
       priority: entry.data.kind === 'home' ? '1.0' : '0.8',
     })),
@@ -28,7 +41,7 @@ export const GET: APIRoute = async () => {
     },
     {
       loc: absolute('/blog/'),
-      lastmod: FALLBACK_DATE,
+      lastmod: clamp(latestBlogDate ?? FALLBACK_DATE),
       changefreq: 'weekly',
       priority: '0.7',
     },
@@ -58,4 +71,3 @@ ${urls}
     },
   });
 };
-

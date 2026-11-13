@@ -11,7 +11,7 @@ cta_heading: "Want the first year priced out on a specific house?"
 lede: "The costs that land after closing in Orange County are the supplemental tax bill, the first full tax bill, an insurance renewal, HOA increases, maintenance you fund yourself, and a bigger utility bill. The first twelve months are expensive because several arrive at once and none of them were in the down payment."
 image: /images/blog/first-year-homeowner-costs-orange-county.webp
 image_alt: "House-shaped brass keys, a coffee mug and a closed notebook on a light wood table"
-updated: 2026-11-19
+updated: 2026-11-06
 faqs:
   - q: "What is a supplemental tax bill?"
     a: "A separate bill for the difference between the seller's assessed value and the price you paid, charged from the transfer date to June 30. It usually arrives three to six months after closing, is generally not paid from your impound account, and you may get two. The county mails it, not your lender."
