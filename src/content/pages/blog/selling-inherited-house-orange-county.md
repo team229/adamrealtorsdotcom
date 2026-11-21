@@ -11,7 +11,7 @@ cta_heading: "Not sure which path you are on?"
 lede: "Who can sell an inherited house depends on how the title was held, not on who is named in the will. Three arrangements cover most Orange County homes: a living trust, joint tenancy or community property with right of survivorship, or a parent's name alone, which usually means probate. Find the deed first."
 image: /images/blog/selling-inherited-house-orange-county.webp
 image_alt: "Sunlit Orange County ranch home with a mailbox in the foreground and hills in the distance"
-updated: 2026-11-02
+updated: 2026-11-30
 faqs:
   - q: "Can I sell my parent's house before probate is finished?"
     a: "You can sell it during probate, but only after the court issues letters giving someone authority. With full authority under California's Independent Administration of Estates Act, the personal representative can list and sell without a confirmation hearing, after a 15-day Notice of Proposed Action. Distributing the money is separate and usually waits until creditors are handled and the case closes."

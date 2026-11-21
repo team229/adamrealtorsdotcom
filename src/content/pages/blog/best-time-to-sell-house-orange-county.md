@@ -11,7 +11,7 @@ cta_heading: "Want a straight answer for your address?"
 lede: "There is no best month to sell a house in Orange County. Spring brings more buyers and more listings at the same time, so the two partly cancel. The right date comes from your house, the buyer pool it attracts, and your own calendar. Start there, not with the season."
 image: /images/blog/best-time-to-sell-house-orange-county.webp
 image_alt: "Curving residential street climbing a golden hillside in Anaheim Hills, with tile-roof homes, palms and dry ridgelines at sunset"
-updated: 2026-11-06
+updated: 2026-11-02
 faqs:
   - q: "When is the best time to sell a house in Orange County?"
     a: "There is no single best month. Spring and early summer carry the deepest buyer pool because families want to move between school years, but inventory rises at the same time, so competition rises with demand. For most sellers the stronger levers are price, condition, preparation and marketing. Pick a date your house and your own timeline can actually support."

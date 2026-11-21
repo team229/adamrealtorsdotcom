@@ -11,7 +11,7 @@ cta_heading: "Not sure what to write down?"
 lede: "In California you owe a buyer the statutory Transfer Disclosure Statement, a natural hazard report, and a written account of known material facts, delivered before title transfers. The form is the floor, not the ceiling. And selling as-is does not remove the duty to disclose. That is the part sellers get wrong most."
 image: /images/blog/california-seller-disclosures-what-to-disclose.webp
 image_alt: "Two-story Mediterranean home in the Anaheim Hills foothills at golden hour, with a closing clipboard and keys in view"
-updated: 2026-11-06
+updated: 2026-11-05
 faqs:
   - q: "What is a transfer disclosure statement?"
     a: "It is the statutory form required by Civil Code section 1102 et seq. for most sales of one to four unit homes. You complete the property sections, each agent completes a visual inspection section, and the finished form reaches the buyer before title transfers. The form is set out in section 1102.6."

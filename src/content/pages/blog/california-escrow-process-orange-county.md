@@ -11,7 +11,7 @@ cta_heading: "In escrow right now?"
 lede: "Escrow is a neutral third party that holds the deposit and the documents, orders title work, and releases money only when the contract conditions are met. In Southern California it is usually an independent escrow company licensed by the state, and it protects both sides. The calendar, though, comes from your contract, not from the industry."
 image: /images/blog/california-escrow-process-orange-county.webp
 image_alt: "House-shaped brass keys, a coffee mug and a closed notebook on a light wood table"
-updated: 2026-11-02
+updated: 2026-11-27
 faqs:
   - q: "What is escrow in California?"
     a: "Escrow is a neutral arrangement where an escrow company holds the buyer's deposit and the transaction documents, orders title work, and releases funds only when the written instructions are satisfied. In Southern California the escrow holder is usually an independent escrow company licensed by the California Department of Financial Protection and Innovation. It is not an advocate for either side, and it cannot act without agreement from both parties."

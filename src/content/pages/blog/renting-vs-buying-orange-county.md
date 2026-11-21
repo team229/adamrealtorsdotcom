@@ -11,7 +11,7 @@ cta_heading: "Want to run this on a real house?"
 lede: "In Orange County, rent versus buy is settled by total cost over the years you actually stay, not by comparing rent with a mortgage payment. Add taxes, insurance, maintenance, the cash you tie up, and the cost of selling, then find the year the two paths cross. That break-even year is the decision."
 image: /images/blog/renting-vs-buying-orange-county.webp
 image_alt: "Contemporary Orange County condo building beside a single-story ranch house with a lawn, in warm golden light"
-updated: 2026-11-03
+updated: 2026-11-25
 faqs:
   - q: "Is it cheaper to rent or buy in Orange County?"
     a: "Neither is always cheaper, and the monthly comparison misleads in both directions. In the example on this page, owning the same life costs $2,426 more per month than renting in year one, and after ten years the two paths are only $22,505 apart. Renting is cheaper for short stays and thin reserves. Buying pulls ahead when you stay long enough for principal paydown and appreciation to cover the round trip. Run both against your own timeline."
