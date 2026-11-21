@@ -9,6 +9,8 @@ slug: selling-inherited-house-orange-county
 faq_heading: "Inherited home questions"
 cta_heading: "Not sure which path you are on?"
 lede: "Who can sell an inherited house depends on how the title was held, not on who is named in the will. Three arrangements cover most Orange County homes: a living trust, joint tenancy or community property with right of survivorship, or a parent's name alone, which usually means probate. Find the deed first."
+image: /images/blog/selling-inherited-house-orange-county.webp
+image_alt: "Sunlit Orange County ranch home with a mailbox in the foreground and hills in the distance"
 updated: 2026-11-02
 faqs:
   - q: "Can I sell my parent's house before probate is finished?"

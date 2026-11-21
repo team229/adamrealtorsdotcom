@@ -9,6 +9,8 @@ slug: renting-vs-buying-orange-county
 faq_heading: "Rent or buy questions"
 cta_heading: "Want to run this on a real house?"
 lede: "In Orange County, rent versus buy is settled by total cost over the years you actually stay, not by comparing rent with a mortgage payment. Add taxes, insurance, maintenance, the cash you tie up, and the cost of selling, then find the year the two paths cross. That break-even year is the decision."
+image: /images/blog/renting-vs-buying-orange-county.webp
+image_alt: "Contemporary Orange County condo building beside a single-story ranch house with a lawn, in warm golden light"
 updated: 2026-11-03
 faqs:
   - q: "Is it cheaper to rent or buy in Orange County?"

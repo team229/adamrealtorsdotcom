@@ -9,6 +9,8 @@ slug: home-inspection-california-what-buyers-should-know
 faq_heading: "Home inspection questions"
 cta_heading: "In contract and need inspections booked?"
 lede: "A standard California home inspection is a visual, noninvasive walkthrough of the systems a buyer can see and reach. It is not a code check, a warranty, or a prediction. It does not open walls or look underground. A clean report means nobody found a visible problem that day."
+image: /images/blog/home-inspection-california-what-buyers-should-know.webp
+image_alt: "Curving residential street climbing a golden hillside in Anaheim Hills, with tile-roof homes, palms and dry ridgelines at sunset"
 updated: 2026-11-03
 faqs:
   - q: "Is a home inspection required in California?"
